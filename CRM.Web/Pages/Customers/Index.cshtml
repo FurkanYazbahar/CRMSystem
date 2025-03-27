@@ -1,0 +1,65 @@
+﻿@page
+@model CRM.Web.Pages.Customers.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h2>Customers</h2>
+
+<a asp-page="/Customers/Create" class="btn btn-success mb-3 float-end">Create New</a>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <input type="text" class="form-control" name="SearchName" placeholder="Name" value="@Model.SearchName" />
+    </div>
+    <div class="col-md-3">
+        <input type="text" class="form-control" name="SearchRegion" placeholder="Region" value="@Model.SearchRegion" />
+    </div>
+    <div class="col-md-3">
+        <input type="date" class="form-control" name="SearchDate" value="@Model.SearchDate?.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Region</th>
+            <th>Registered</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Customers.Any())
+        {
+            int index = 1;
+            foreach (var customer in Model.Customers)
+            {
+                <tr>
+                    <td>@index</td>
+                    <td>@customer.FirstName @customer.LastName</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.Region</td>
+                    <td>@customer.RegistrationDate.ToShortDateString()</td>
+                    <td>
+                        <a asp-page="/Customers/Details" asp-route-id="@customer.Id" class="btn btn-info btn-sm me-1">View</a>
+                        <a asp-page="/Customers/Edit" asp-route-id="@customer.Id" class="btn btn-primary btn-sm me-1">Edit</a>
+                        <a asp-page="/Customers/Delete" asp-route-id="@customer.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                index++;
+            }
+        }
+        else
+        {
+            <tr><td colspan="6" class="text-center">No customers found.</td></tr>
+        }
+    </tbody>
+</table>

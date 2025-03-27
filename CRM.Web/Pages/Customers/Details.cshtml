@@ -1,0 +1,21 @@
+﻿@page "{id:guid}"
+@model CRM.Web.Pages.Customers.DetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<h2>Customer Details</h2>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Customer.FirstName @Model.Customer.LastName</h5>
+        <p class="card-text">
+            <strong>Email:</strong> @Model.Customer.Email <br />
+            <strong>Region:</strong> @Model.Customer.Region <br />
+            <strong>Registered:</strong> @Model.Customer.RegistrationDate.ToShortDateString()
+        </p>
+        <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
